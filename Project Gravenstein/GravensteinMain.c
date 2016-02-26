@@ -6,21 +6,33 @@
 * Project Gravenstein
 * Wes Ring
 */
-void manualControl(void){
+
+void roboControl(void){ //For autonomous control
+
+}
+
+void manualControl(void){ //For manual control
 	if (abs(vexRT(Ch2)) > 5 || abs(vexRT(Ch3)) > 5){
-		startMotor(leftMotor,vexRT(Ch3));
-		startMotor(rightMotor,vexRT(Ch2));
+		motor[leftMotor] = vexRT(Ch3);
+		motor[rightMotor] = vexRT(Ch2);
 	}
 	else
 	{
-		stopMotor(leftMotor);
-		stopMotor(rightMotor);
+		motor[leftMotor] = 0;
+		motor[rightMotor] = 0;
 	}
 }
 
 task main(){
-//	enableCompetitionMode();
-repeat(forever){
-		manualControl();
+	enableCompetitionMode(); //This makes it so the Vex Competition machine can take control
+	repeat(forever){
+		if (getCompetitionMode() = true){
+			if (getCompetitionDriverControl() == true) {manualControl();} //Driver Controls
+			if (getCompetitionAutonomous() == true) {roboControl();} //Robo Controls
+		} else {
+		manualControl(); //For driver controls
+		//roboControl();// For robo controls
+		}
+
 	}
 }
