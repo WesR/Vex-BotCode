@@ -6,19 +6,20 @@
 * Project Gravenstein
 * Wes Ring
 */
-manualControl(){
+void manualControl(void){
 	if (abs(vexRT(Ch2)) > 5 || abs(vexRT(Ch3)) > 5){
-		startMotor(Left,vexRT(Ch3));
-		startMotor(Right,vexRT(Ch2));
+		startMotor(leftMotor,vexRT(Ch3));
+		startMotor(rightMotor,vexRT(Ch2));
 	}
 	else
 	{
-		stopMotor(Right);
-		stopMotor(Left);
+		stopMotor(leftMotor);
+		stopMotor(rightMotor);
 	}
 }
 
 task main(){
+//	enableCompetitionMode();
 repeat(forever){
 		manualControl();
 	}
