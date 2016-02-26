@@ -1,0 +1,182 @@
+<Version>1.0.1</Version>
+
+<ProgrammingBlock type="functionCall" function="enableCompetitionMode"/>
+
+<ProgrammingBlock type="loop" loopType="RepeatForever"/>
+
+<ProgrammingBlock type="loop" loopType="IfOnly">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">getCompetitionDriverControl()</Parameter>
+        <Parameter name="operator" type="typedef">==</Parameter>
+        <Parameter name="RHS" type="int">true</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="buttonControl">
+    <Parameters>
+        <Parameter name="armMotorPort" type="base typedef" typeDef="tMotor">port5</Parameter>
+        <Parameter name="upButton" type="base typedef" typeDef="TVexJoysticks">Btn6U</Parameter>
+        <Parameter name="downButton" type="base typedef" typeDef="TVexJoysticks">Btn5U</Parameter>
+        <Parameter name="armSpeed" type="short">75</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="buttonControl">
+    <Parameters>
+        <Parameter name="armMotorPort" type="base typedef" typeDef="tMotor">port2</Parameter>
+        <Parameter name="upButton" type="base typedef" typeDef="TVexJoysticks">Btn6D</Parameter>
+        <Parameter name="downButton" type="base typedef" typeDef="TVexJoysticks">Btn5D</Parameter>
+        <Parameter name="armSpeed" type="short">40</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="joystickControl">
+    <Parameters>
+        <Parameter name="armMotorPort" type="base typedef" typeDef="tMotor">port7</Parameter>
+        <Parameter name="motorJoystick" type="base typedef" typeDef="TVexJoysticks">Ch3</Parameter>
+        <Parameter name="threshold" type="short">10</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="joystickControl">
+    <Parameters>
+        <Parameter name="armMotorPort" type="base typedef" typeDef="tMotor">port8</Parameter>
+        <Parameter name="motorJoystick" type="base typedef" typeDef="TVexJoysticks">Ch2</Parameter>
+        <Parameter name="threshold" type="short">10</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="buttonControl">
+    <Parameters>
+        <Parameter name="armMotorPort" type="base typedef" typeDef="tMotor">port4</Parameter>
+        <Parameter name="upButton" type="base typedef" typeDef="TVexJoysticks">Btn8L</Parameter>
+        <Parameter name="downButton" type="base typedef" typeDef="TVexJoysticks">Btn8U</Parameter>
+        <Parameter name="armSpeed" type="short">30</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="end"/>
+
+<ProgrammingBlock type="loop" loopType="IfOnly">
+    <Parameters>
+        <Parameter name="LHS" type="typedef">getCompetitionAutonomous()</Parameter>
+        <Parameter name="operator" type="typedef">==</Parameter>
+        <Parameter name="RHS" type="int">true</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="setMotor">
+    <Parameters>
+        <Parameter name="motorPort" type="base typedef" typeDef="tMotor">port4</Parameter>
+        <Parameter name="speed" type="short">-50</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="setMotor">
+    <Parameters>
+        <Parameter name="motorPort" type="base typedef" typeDef="tMotor">port7</Parameter>
+        <Parameter name="speed" type="short">50</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="setMotor">
+    <Parameters>
+        <Parameter name="motorPort" type="base typedef" typeDef="tMotor">port8</Parameter>
+        <Parameter name="speed" type="short">50</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="wait">
+    <Parameters>
+        <Parameter name="quantity" type="float">2</Parameter>
+        <Parameter name="unitType" type="base typedef" typeDef="tMovementUnits">seconds</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="stopAllMotors"/>
+
+<ProgrammingBlock type="functionCall" function="setMotor">
+    <Parameters>
+        <Parameter name="motorPort" type="base typedef" typeDef="tMotor">port4</Parameter>
+        <Parameter name="speed" type="short">50</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="wait">
+    <Parameters>
+        <Parameter name="quantity" type="float">1</Parameter>
+        <Parameter name="unitType" type="base typedef" typeDef="tMovementUnits">seconds</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="setMotor">
+    <Parameters>
+        <Parameter name="motorPort" type="base typedef" typeDef="tMotor">port8</Parameter>
+        <Parameter name="speed" type="short">-50</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="setMotor">
+    <Parameters>
+        <Parameter name="motorPort" type="base typedef" typeDef="tMotor">port7</Parameter>
+        <Parameter name="speed" type="short">-50</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="functionCall" function="wait">
+    <Parameters>
+        <Parameter name="quantity" type="float">2</Parameter>
+        <Parameter name="unitType" type="base typedef" typeDef="tMovementUnits">seconds</Parameter>
+    </Parameters>
+</ProgrammingBlock>
+
+<ProgrammingBlock type="end"/>
+
+<ProgrammingBlock type="end"/>
+
+<RobotConfiguration>#pragma config(Sensor, dgtl1,  DeathSonarIn,   sensorSONAR_inch)
+#pragma config(Sensor, dgtl3,  Autonomous,     sensorDigitalIn)
+#pragma config(Motor,  port2,           Shoulder,      tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port4,           Hand,          tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port5,           Claw,          tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port7,           Left,          tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port8,           Right,         tmotorVex393_MC29, openLoop)
+//*!!Code automatically generated by 'ROBOTC' configuration wizard               !!*//
+</RobotConfiguration>
+
+<CSource>#pragma config(Sensor, dgtl1,  DeathSonarIn,   sensorSONAR_inch)
+#pragma config(Sensor, dgtl3,  Autonomous,     sensorDigitalIn)
+#pragma config(Motor,  port2,           Shoulder,      tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port4,           Hand,          tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port5,           Claw,          tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port7,           Left,          tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port8,           Right,         tmotorVex393_MC29, openLoop)
+//*!!Code automatically generated by 'ROBOTC' configuration wizard               !!*//
+
+
+task main()
+{
+	enableCompetitionMode();
+	repeat (forever) {
+		if (getCompetitionDriverControl() == true) {
+			buttonControl(port5, Btn6U, Btn5U, 75);
+			buttonControl(port2, Btn6D, Btn5D, 40);
+			joystickControl(port7, Ch3, 10);
+			joystickControl(port8, Ch2, 10);
+			buttonControl(port4, Btn8L, Btn8U, 30);
+		}
+		if (getCompetitionAutonomous() == true) {
+			setMotor(port4, -50);
+			setMotor(port7, 50);
+			setMotor(port8, 50);
+			wait(2, seconds);
+			stopAllMotors();
+			setMotor(port4, 50);
+			wait(1, seconds);
+			setMotor(port8, -50);
+			setMotor(port7, -50);
+			wait(2, seconds);
+		}
+	}
+}
+</CSource>
