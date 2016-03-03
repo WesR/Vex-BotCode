@@ -5,6 +5,7 @@
 /*
 * Project Gravenstein
 * Wes Ring
+DDDDDDADADADADADADADADADADADA ANNANANANANANANANNANANAN
 */
 
 void roboControl(void){ //For autonomous control
@@ -12,12 +13,14 @@ void roboControl(void){ //For autonomous control
 }
 
 void manualControl(void){ //For manual control
-	if (abs(vexRT(Ch2)) > 5 || abs(vexRT(Ch3)) > 5){
+	if (abs(vexRT(Ch2)) > 5 || abs(vexRT(Ch3)) > 5){ //Only move if we pop over 5 units on the controls
+		//Run the motors at the joystick input
 		motor[leftMotor] = vexRT(Ch3);
 		motor[rightMotor] = vexRT(Ch2);
 	}
 	else
 	{
+		//Kill the motors
 		motor[leftMotor] = 0;
 		motor[rightMotor] = 0;
 	}
@@ -26,14 +29,14 @@ void manualControl(void){ //For manual control
 task main(){
 	enableCompetitionMode(); //This makes it so the Vex Competition machine can take control
 	bool _CompetitionMode = true; //Allowing us to refrence if we are in Competition Mode
+
 	repeat(forever){
-		if (_CompetitionMode == true){
-			if (getCompetitionDriverControl() == true) {manualControl();} //Driver Controls
-			if (getCompetitionAutonomous() == true) {roboControl();} //Robo Controls
+		if ( _CompetitionMode == true){
+			if (getCompetitionDriverControl() == true) {manualControl();} //Competition driver Controls
+			if (getCompetitionAutonomous() == true) {roboControl();} //Competition robo Controls
 		} else {
 		manualControl(); //For driver controls
 		//roboControl();// For robo controls
 		}
-
 	}
 }
