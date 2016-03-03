@@ -25,8 +25,9 @@ void manualControl(void){ //For manual control
 
 task main(){
 	enableCompetitionMode(); //This makes it so the Vex Competition machine can take control
+	bool _CompetitionMode = true; //Allowing us to refrence if we are in Competition Mode
 	repeat(forever){
-		if (getCompetitionMode() = true){
+		if (_CompetitionMode == true){
 			if (getCompetitionDriverControl() == true) {manualControl();} //Driver Controls
 			if (getCompetitionAutonomous() == true) {roboControl();} //Robo Controls
 		} else {
