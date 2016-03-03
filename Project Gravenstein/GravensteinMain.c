@@ -5,7 +5,7 @@
 /*
 * Project Gravenstein
 * Wes Ring
-DDDDDDADADADADADADADADADADADA ANNANANANANANANANNANANAN
+* DDDDDDADADADADADADADADADADADA ANNANANANANANANANNANANAN
 */
 
 void roboControl(void){ //For autonomous control
@@ -15,14 +15,14 @@ void roboControl(void){ //For autonomous control
 void manualControl(void){ //For manual control
 	if (abs(vexRT(Ch2)) > 5 || abs(vexRT(Ch3)) > 5){ //Only move if we pop over 5 units on the controls
 		//Run the motors at the joystick input
-		motor[leftMotor] = vexRT(Ch3);
-		motor[rightMotor] = vexRT(Ch2);
+		setMotor(leftMotor,vexRT(Ch3));
+		setMotor(rightMotor,vexRT(Ch2));
 	}
 	else
 	{
 		//Kill the motors
-		motor[leftMotor] = 0;
-		motor[rightMotor] = 0;
+		stopMotor(leftMotor);
+		stopMotor(rightMotor);
 	}
 }
 
