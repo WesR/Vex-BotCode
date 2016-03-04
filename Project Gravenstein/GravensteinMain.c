@@ -9,13 +9,13 @@
 */
 
 void roboControl(void){ //For autonomous control
-		//This is test code
-		//We spin in a circle for 5 seconds
-		setMotor(leftMotor,100);
-		setMotor(rightMotor,-100);
-		wait(5);
-		stopMotor(leftMotor);
-		stopMotor(rightMotor);
+	//This is test code
+	//We spin in a circle for 5 seconds
+	setMotor(leftMotor,100);
+	setMotor(rightMotor,-100);
+	wait(5);
+	stopMotor(leftMotor);
+	stopMotor(rightMotor);
 }
 
 void manualControl(void){ //For manual control
@@ -34,15 +34,15 @@ void manualControl(void){ //For manual control
 
 task main(){
 	enableCompetitionMode(); //This makes it so the Vex Competition machine can take control
-	bool _CompetitionMode = true; //Allowing us to refrence if we are in Competition Mode
+	bool _CompetitionMode = false; //Allowing us to refrence if we are in Competition Mode
 
 	repeat(forever){
 		if ( _CompetitionMode == true){
 			if (getCompetitionDriverControl() == true) {manualControl();} //Competition driver Controls
 			if (getCompetitionAutonomous() == true) {roboControl();} //Competition robo Controls
-		} else {
-		manualControl(); //For driver controls
-		if (vexRT(Btn8L)){ roboControl();} //If 8L is pressed, we go into auto test mode
+			} else {
+			manualControl(); //For driver controls
+			if (vexRT(Btn8L)){ roboControl();} //If 8L is pressed, we go into auto test mode
 		}
 	}
 }
