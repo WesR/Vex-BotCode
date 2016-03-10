@@ -34,7 +34,6 @@ void roboControl(void){ //For autonomous contro	//This is test code
 	//We spin in a circle for 5 seconds
 	setMotor(leftMotor,100);
 	setMotor(rightMotor,-100);
-	startLauncher();
 	wait(5);
 	stopMotor(leftMotor);
 	stopMotor(rightMotor);
@@ -52,6 +51,11 @@ void manualControl(void){ //For manual control
 		stopMotor(leftMotor);
 		stopMotor(rightMotor);
 	}
+	if (vexRT(Btn7R)){ startLauncher();} //Accelerates launcher to 100
+	if (vexRT(Btn7D)){ runLauncher(65);} //Sets launcher speed to 65
+	if (vexRT(Btn7L)){ runLauncher(100);} //Sets launcher speed to 100
+	if (vexRT(Btn7U)){ runLauncher(127);} //Sets launcher speed to 127 (max)
+	if (vexRT(Btn8L)){ stopLauncher();} //Kills the launcher
 }
 
 task main(){
@@ -64,7 +68,7 @@ task main(){
 			if (getCompetitionAutonomous() == true) {roboControl();} //Competition robo Controls
 			} else {
 			manualControl(); //For driver controls
-			if (vexRT(Btn8L)){ roboControl();} //If 8L is pressed, we go into auto test mode
+			if (vexRT(Btn8U)){ roboControl();} //If 8L is pressed, we go into auto test mode
 		}
 	}
 }
