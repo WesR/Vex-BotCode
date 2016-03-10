@@ -6,8 +6,7 @@
 
 /*
 * Project Gravenstein
-* Wes Ring
-* DDDDDDADADADADADADADADADADADA ANNANANANANANANANNANANAN
+* Wes Ring, Charles M
 */
 
 int launcherSpeed = 0;
@@ -21,13 +20,12 @@ void setLauncherSpeed(int _speed) {
 void stopLauncher(void){
 	stopMotor(launcherLeft);
 	stopMotor(launcherRight);
+	launcherSpeed = 0;
+	launcherSpeed_new = 0;
 }
 void updateLauncherSpeed(void){
-	while(launcherSpeed < launcherSpeed_new){
-		launcherSpeed++;
-		wait(0.1);
-		setLauncherSpeed(launcherSpeed);
-	}
+	if (launcherSpeed <= launcherSpeed_new){launcherSpeed++;wait(.1);}
+	setLauncherSpeed(launcherSpeed);
 }
 
 void roboControl(void){ //For autonomous contro	//This is test code
