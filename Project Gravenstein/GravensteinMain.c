@@ -6,7 +6,8 @@
 
 /*
 * Project Gravenstein
-* Wes Ring, Charles M
+* By Wes Ring©
+* Charles M
 */
 
 int launcherSpeed = 0;
@@ -24,7 +25,8 @@ void stopLauncher(void){
 	launcherSpeed_new = 0;
 }
 void updateLauncherSpeed(void){
-	if (launcherSpeed <= launcherSpeed_new){launcherSpeed++;wait(.1);}
+	if (launcherSpeed < launcherSpeed_new){launcherSpeed++;wait(.1);}
+	if (launcherSpeed > launcherSpeed_new){launcherSpeed--;wait(.1);}
 	setLauncherSpeed(launcherSpeed);
 }
 
@@ -38,7 +40,7 @@ void roboControl(void){ //For autonomous contro	//This is test code
 }
 
 void manualControl(void){ //For manual control
-	if (abs(vexRT(Ch2)) > 5 || abs(vexRT(Ch3)) > 5){ //Only move if we pop over 5 units on the controls
+	if (abs(vexRT(Ch2)) > 15 || abs(vexRT(Ch3)) > 15){ //Only move if we pop over 15 units on the controls
 		//Run the motors at the joystick input
 		setMotor(leftMotor,vexRT(Ch3));
 		setMotor(rightMotor,vexRT(Ch2));
