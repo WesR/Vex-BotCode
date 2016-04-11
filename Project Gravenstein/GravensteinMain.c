@@ -1,6 +1,6 @@
 #pragma config(Sensor, in1,    launcherDegree, sensorPotentiometer)
-#pragma config(Sensor, dgtl1,  leftEncoder,    sensorQuadEncoder)
-#pragma config(Sensor, dgtl3,  RightEncoder,   sensorQuadEncoder)
+#pragma config(Sensor, dgtl1,  encoder_Left,   sensorQuadEncoder)
+#pragma config(Sensor, dgtl3,  encoder_Right,  sensorQuadEncoder)
 #pragma config(Motor,  port1,           leftMotor,     tmotorVex393_HBridge, openLoop, driveLeft)
 #pragma config(Motor,  port2,           launcherMotors, tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port4,           launcherTilt,  tmotorVex393_MC29, openLoop)
@@ -17,6 +17,7 @@
 
 int launcherSpeed = 0;
 int launcherSpeed_new = 0;
+int autoSpeed = 100;
 bool hozBelt_on = false;
 
 void setLauncherSpeed(int _speed){ //Sets the launcher speed
@@ -43,8 +44,14 @@ void goForwardFor_time(int time){ //Goes forward for a set ammount of time
 	stopMotor(rightMotor);
 }
 
-void goForwardFor_distance(int inches){
+void goForwardFor_distance(int targetInches){ //600  = 13.5in (44.444)perIn
 	//600 -right, +left
+	int targetDistance = targetInches * (44.4);
+	SensorValue(encoder_Left) = 0;
+	SensorValue(encoder_Right) = 0;
+	while(encoder_Left < targetDistance || encoder_Right < targetDistance)){
+		if (encoder_Left < targetDistance) {setMotor(leftMotor,autoSpeed);}
+	}
 }
 
 void roboControl(void){ //For autonomous control	//This is test code
