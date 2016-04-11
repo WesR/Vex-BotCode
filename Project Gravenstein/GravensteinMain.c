@@ -3,7 +3,6 @@
 #pragma config(Sensor, dgtl3,  RightEncoder,   sensorQuadEncoder)
 #pragma config(Motor,  port1,           leftMotor,     tmotorVex393_HBridge, openLoop, driveLeft)
 #pragma config(Motor,  port2,           launcherMotors, tmotorVex393_MC29, openLoop)
-#pragma config(Motor,  port3,           launcherRight, tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port4,           launcherTilt,  tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port5,           hozBelt,       tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port6,           vertBelt,      tmotorVex393_MC29, openLoop)
