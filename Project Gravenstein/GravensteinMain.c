@@ -19,7 +19,6 @@
 int launcherSpeed = 0;
 int launcherSpeed_new = 0;
 bool hozBelt_on = false;
-bool vertBelt_on = false;
 
 void setLauncherSpeed(int _speed) {
 	setMotor(launcherLeft, -_speed);
@@ -38,7 +37,7 @@ void updateLauncherSpeed(void){
 	setLauncherSpeed(launcherSpeed);
 }
 
-void roboControl(void){ //For autonomous contro	//This is test code
+void roboControl(void){ //For autonomous control	//This is test code
 	//We spin in a circle for 5 seconds
 	setMotor(leftMotor,100);
 	setMotor(rightMotor,100);
@@ -48,45 +47,40 @@ void roboControl(void){ //For autonomous contro	//This is test code
 }
 
 void manualControl(void){ //For manual control
+
 	if (abs(vexRT(Ch2)) > 15 || abs(vexRT(Ch3)) > 15){ //Only move if we pop over 15 units on the controls
 		//Run the motors at the joystick input
 		setMotor(leftMotor,vexRT(Ch3));
 		setMotor(rightMotor,vexRT(Ch2));
-	}
-	else
-	{
+	}	else {
 		//Kill the motors
 		stopMotor(leftMotor);
 		stopMotor(rightMotor);
 	}
+
 	//if (vexRT(Btn8U)){ roboControl();} //If 8L is pressed, we go into auto test mode
 
-	if (vexRT(Btn8L)){if(!hozBelt_on){hozBelt_on = true; setMotor(hozBelt,65);}else{hozBelt_on = false;stopMotor(hozBelt);}} // Starts and stops the horizontal belt
+	if (vexRT(Btn8L)){ // Starts and stops the horizontal belt
+		if(!hozBelt_on){hozBelt_on = true; setMotor(hozBelt,65);}else{hozBelt_on = false;stopMotor(hozBelt);}
+	}
 
-		if (vexRT(Btn5D)||vexRT(Btn6D))
-	{
-		if (vexRT(Btn5D)){setMotor(vertBelt,-127);}
-		if (vexRT(Btn6D)){setMotor(vertBelt,127);}
-
+	if (vexRT(Btn5D)||vexRT(Btn6D)){ // Starts and stops verticle belt
+		if (vexRT(Btn5D)){setMotor(vertBelt,-127);} else {setMotor(vertBelt,127);}
 	} else {
 		stopMotor(vertBelt);
 	}
 
-	if (vexRT(Btn5U)||vexRT(Btn6U))
-	{
-		if (vexRT(Btn5U)){setMotor(launcherTilt,-30);}
-		if (vexRT(Btn6U)){setMotor(launcherTilt,30);}
-
+	if (vexRT(Btn5U)||vexRT(Btn6U)){// Starts and stops the launcher tilt motors
+		if (vexRT(Btn5U)){setMotor(launcherTilt,-30);} else {setMotor(launcherTilt,30);}
 	} else {
 		stopMotor(launcherTilt);
 	}
 
-
+	/*			Launcher speeds			*/
 	if (vexRT(Btn7D)){ stopLauncher();} //Stops Launcher
 	if (vexRT(Btn7L)){ launcherSpeed_new = 65;} //Sets launcher speed to 65
 	if (vexRT(Btn7U)){ launcherSpeed_new = 100;} //Sets launcher speed to 100
 	if (vexRT(Btn7R)){ launcherSpeed_new = 127;} //Sets launcher speed to 127 (max)
-
 	updateLauncherSpeed();
 }
 
