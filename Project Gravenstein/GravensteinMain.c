@@ -24,24 +24,32 @@ void setLauncherSpeed(int _speed){ //Sets the launcher speed
 	setMotor(launcherLeft, -_speed);
 	setMotor(launcherRight, _speed);
 }
+
 void stopLauncher(void){ //Kills the launcher
 	stopMotor(launcherLeft);
 	stopMotor(launcherRight);
 	launcherSpeed = 0;
 	launcherSpeed_new = 0;
 }
+
 void updateLauncherSpeed(void){ //Updates the launcher speed changes
 	if (launcherSpeed < launcherSpeed_new){launcherSpeed++;wait(.1);}
 	if (launcherSpeed > launcherSpeed_new){launcherSpeed--;wait(.1);}
 	setLauncherSpeed(launcherSpeed);
 }
-void goForwardFor(int time){ //Goes forward for a set ammount of time
+
+void goForwardFor_time(int time){ //Goes forward for a set ammount of time
 	setMotor(leftMotor,120);
 	setMotor(rightMotor,120);
 	wait(time);
 	stopMotor(leftMotor);
 	stopMotor(rightMotor);
 }
+
+void goForwardFor_distance(int inches){
+	//600 -right, +left
+}
+
 void roboControl(void){ //For autonomous control	//This is test code
 	//We spin in a circle for 5 seconds
 	setMotor(leftMotor,100);
