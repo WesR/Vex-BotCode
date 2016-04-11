@@ -2,7 +2,7 @@
 #pragma config(Sensor, dgtl1,  leftEncoder,    sensorQuadEncoder)
 #pragma config(Sensor, dgtl3,  RightEncoder,   sensorQuadEncoder)
 #pragma config(Motor,  port1,           leftMotor,     tmotorVex393_HBridge, openLoop, driveLeft)
-#pragma config(Motor,  port2,           launcherLeft,  tmotorVex393_MC29, openLoop, reversed)
+#pragma config(Motor,  port2,           launcherMotors, tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port3,           launcherRight, tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port4,           launcherTilt,  tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port5,           hozBelt,       tmotorVex393_MC29, openLoop, reversed)
@@ -21,13 +21,11 @@ int launcherSpeed_new = 0;
 bool hozBelt_on = false;
 
 void setLauncherSpeed(int _speed){ //Sets the launcher speed
-	setMotor(launcherLeft, -_speed);
-	setMotor(launcherRight, _speed);
+	setMotor(launcherMotors, _speed);
 }
 
 void stopLauncher(void){ //Kills the launcher
-	stopMotor(launcherLeft);
-	stopMotor(launcherRight);
+	stopMotor(launcherMotors);
 	launcherSpeed = 0;
 	launcherSpeed_new = 0;
 }
@@ -65,7 +63,7 @@ void manualControl(void){ //For manual control
 		//Run the motors at the joystick input
 		setMotor(leftMotor,vexRT(Ch3));
 		setMotor(rightMotor,vexRT(Ch2));
-	}	else {
+		}	else {
 		//Kill the motors
 		stopMotor(leftMotor);
 		stopMotor(rightMotor);
@@ -79,18 +77,13 @@ void manualControl(void){ //For manual control
 
 	if (vexRT(Btn5D)||vexRT(Btn6D)){ // Starts and stops verticle belt
 		if (vexRT(Btn5D)){setMotor(vertBelt,-127);} else {setMotor(vertBelt,127);}
-	} else {
+		} else {
 		stopMotor(vertBelt);
 	}
 
-	if (vexRT(Btn5U)||vexRT(Btn6U)){// Starts and stops the launcher tilt motors
-		if (vexRT(Btn5U)){setMotor(launcherTilt,-30);} else {setMotor(launcherTilt,30);}
-	} else {
-		stopMotor(launcherTilt);
-	}
-
 	/*			Launcher speeds			*/
-	if (vexRT(Btn7D)){ stopLauncher();} //Stops Launcher
+	if (vexRT(Btn8R)){ stopLauncher();} //Emergency launcher Stop
+	if (vexRT(Btn7D)){ launcherSpeed_new = 0;} //Safe launcher Stop
 	if (vexRT(Btn7L)){ launcherSpeed_new = 65;} //Sets launcher speed to 65
 	if (vexRT(Btn7U)){ launcherSpeed_new = 100;} //Sets launcher speed to 100
 	if (vexRT(Btn7R)){ launcherSpeed_new = 127;} //Sets launcher speed to 127 (max)
