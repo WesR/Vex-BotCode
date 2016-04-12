@@ -86,7 +86,7 @@ void manualControl(void){ //For manual control
 	//if (vexRT(Btn8U)){ roboControl();} //If 8L is pressed, we go into auto test mode
 
 	if (vexRT(Btn8L)){ // Starts and stops the horizontal belt
-		if(!hozBelt_on){hozBelt_on = true; setMotor(hozBelt,65);}else{hozBelt_on = false;stopMotor(hozBelt);}
+		if(!hozBelt_on){hozBelt_on = true; setMotor(hozBelt,65);}else{hozBelt_on = false;stopMotor(hozBelt);wait(.1);}
 	}
 
 	if (vexRT(Btn5D)||vexRT(Btn6D)){ // Starts and stops verticle belt
