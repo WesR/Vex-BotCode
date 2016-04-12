@@ -64,7 +64,7 @@ void goForwardFor_distance(int targetInches){ //600  = 13.5in (44.444)perIn
 }
 void safeLauncherStop(void){
 	launcherSpeed_new = 0; //Set our new target speed
-	if(launcherSpeed > 30){launcherSpeed = launcherSpeed - 30;} //Do our first drop down, so it dosn't take so long
+	if(launcherSpeed > 15){launcherSpeed = launcherSpeed - 15;} //Do our first drop down, so it dosn't take so long
 	else {launcherSpeed = 0;}
 }
 void roboControl(void){ //For autonomous control	//This is test code
