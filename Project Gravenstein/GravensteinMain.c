@@ -49,8 +49,15 @@ void goForwardFor_distance(int targetInches){ //600  = 13.5in (44.444)perIn
 	int targetDistance = targetInches * (44.4);
 	SensorValue(encoder_Left) = 0;
 	SensorValue(encoder_Right) = 0;
-	while(encoder_Left < targetDistance || encoder_Right < targetDistance)){
+	while(encoder_Left < targetDistance || encoder_Right < targetDistance){
+		//Change left motor
 		if (encoder_Left < targetDistance) {setMotor(leftMotor,autoSpeed);}
+		else if (encoder_Left > targetDistance) {setMotor(leftMotor,-autoSpeed);}
+		else {stopMotor(leftMotor);}
+		//Change Right motor
+		if (encoder_Right < targetDistance) {setMotor(rightMotor,autoSpeed);}
+		else if (encoder_Right > targetDistance) {setMotor(rightMotor,-autoSpeed);}
+		else {stopMotor(rightMotor);}
 	}
 }
 
