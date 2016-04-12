@@ -46,17 +46,18 @@ void goForwardFor_time(int time){ //Goes forward for a set ammount of time
 
 void goForwardFor_distance(int targetInches){ //600  = 13.5in (44.444)perIn
 	//600 -right, +left
-	int targetDistance = targetInches * (44.4);
+	int targetDistance_left = targetInches * (44.4);
+	int targetDistance_right = -targetDistance_left;
 	SensorValue(encoder_Left) = 0;
 	SensorValue(encoder_Right) = 0;
-	while(encoder_Left < targetDistance || encoder_Right < targetDistance){
+	while(encoder_Left < targetDistance_left || encoder_Right < targetDistance_right){
 		//Change left motor
-		if (encoder_Left < targetDistance) {setMotor(leftMotor,autoSpeed);}
-		else if (encoder_Left > targetDistance) {setMotor(leftMotor,-autoSpeed);}
+		if (encoder_Left < targetDistance_left) {setMotor(leftMotor,autoSpeed);}
+		else if (encoder_Left > targetDistance_left) {setMotor(leftMotor,-autoSpeed);}
 		else {stopMotor(leftMotor);}
 		//Change Right motor
-		if (encoder_Right < targetDistance) {setMotor(rightMotor,autoSpeed);}
-		else if (encoder_Right > targetDistance) {setMotor(rightMotor,-autoSpeed);}
+		if (encoder_Right < targetDistance_right) {setMotor(rightMotor,-autoSpeed);}
+		else if (encoder_Right > targetDistance_right) {setMotor(rightMotor,autoSpeed);}
 		else {stopMotor(rightMotor);}
 	}
 }
