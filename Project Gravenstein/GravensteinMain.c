@@ -69,6 +69,8 @@ void roboControl(void){ //For autonomous control	//This is test code
 	wait(5);
 	stopMotor(leftMotor);
 	stopMotor(rightMotor);
+	goForwardFor_distance(4);//Go forward 4 in
+	goForwardFor_time(2);//Go forward 2 seconds
 }
 
 void manualControl(void){ //For manual control
@@ -85,19 +87,19 @@ void manualControl(void){ //For manual control
 
 	//if (vexRT(Btn8U)){ roboControl();} //If 8L is pressed, we go into auto test mode
 
-	if (vexRT(Btn8L)){ // Starts and stops the horizontal belt
-		if(!hozBelt_on){hozBelt_on = true; setMotor(hozBelt,65);}else{hozBelt_on = false;stopMotor(hozBelt);wait(.1);}
+	if (!vexRT(Btn8L)){ // Starts and stops the horizontal belt
+		if(!hozBelt_on){hozBelt_on = true; setMotor(hozBelt,100);}else{hozBelt_on = false;stopMotor(hozBelt);}
 	}
 
 	if (vexRT(Btn5D)||vexRT(Btn6D)){ // Starts and stops verticle belt
-		if (vexRT(Btn5D)){setMotor(vertBelt,-127);} else {setMotor(vertBelt,127);}
+		if (vexRT(Btn5D)){setMotor(vertBelt,-100);} else {setMotor(vertBelt,100);}
 		} else {
 		stopMotor(vertBelt);
 	}
 
 	/*			Launcher speeds			*/
 	if (vexRT(Btn8R)){ stopLauncher();} //Emergency launcher Stop
-	if (vexRT(Btn7D)){ launcherSpeed_new = 0;} //Safe launcher Stop
+	if (vexRT(Btn7D)){ launcherSpeed = launcherSpeed - 30; launcherSpeed_new = 0;} //Safe launcher Stop
 	if (vexRT(Btn7L)){ launcherSpeed_new = 65;} //Sets launcher speed to 65
 	if (vexRT(Btn7U)){ launcherSpeed_new = 100;} //Sets launcher speed to 100
 	if (vexRT(Btn7R)){ launcherSpeed_new = 127;} //Sets launcher speed to 127 (max)
