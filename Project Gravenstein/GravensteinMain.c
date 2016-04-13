@@ -59,12 +59,16 @@ void goForwardFor_distance(int targetInches){//Go Forwards a distance
 	SensorValue(encoder_Right) = 0;
 	while(encoder_Left < targetDistance_left || encoder_Right < targetDistance_right){
 		//Change left motor
-		if (encoder_Left < targetDistance_left) {setMotor(leftMotor,autoSpeed);}
-		else if (encoder_Left > targetDistance_left) {setMotor(leftMotor,-autoSpeed);}
+		if (encoder_Left < targetDistance_left+30 || encoder_Left < targetDistance_left-30) {setMotor(leftMotor,autoSpeed);}
+		else if (encoder_Left > targetDistance_left+30 || encoder_Left > targetDistance_left-30) {setMotor(leftMotor,-autoSpeed);}
 		else {stopMotor(leftMotor);}
 		//Change Right motor
-		if (encoder_Right < targetDistance_right) {setMotor(rightMotor,-autoSpeed);}
-		else if (encoder_Right > targetDistance_right) {setMotor(rightMotor,autoSpeed);}
+
+
+
+		//RIGHT KEEPS GOING?@
+		if (encoder_Right < targetDistance_right+30 || encoder_Right < targetDistance_right-30) {setMotor(rightMotor,-autoSpeed);}
+		else if (encoder_Right > targetDistance_right+30 || encoder_Right > targetDistance_right-30) {setMotor(rightMotor,autoSpeed);}
 		else {stopMotor(rightMotor);}
 	}
 }
@@ -86,6 +90,13 @@ void goBackwardFor_distance(int targetInches){//Go backwards a distance
 		else {stopMotor(rightMotor);}
 	}
 }
+void turn_right(void){
+	//while
+	//1272
+}
+void turn_left(void){
+
+}
 void safeLauncherStop(void){
 	launcherSpeed_new = 0; //Set our new target speed
 	if(launcherSpeed > 22){launcherSpeed = launcherSpeed - 22;} //Do our first drop down, so it dosn't take so long
@@ -94,12 +105,13 @@ void safeLauncherStop(void){
 void roboControl(void){ //For autonomous control	//This is test code
 	//We spin in a circle for 5 seconds
 	setMotor(leftMotor,100);
-	setMotor(rightMotor,100);
+	setMotor(rightMotor,-100);
 	wait(5);
 	stopMotor(leftMotor);
 	stopMotor(rightMotor);
 	goForwardFor_distance(4);//Go forward 4 in
 	goForwardFor_time(2);//Go forward 2 seconds
+	wait(100000000);
 }
 
 void manualControl(void){ //For manual control
@@ -114,7 +126,7 @@ void manualControl(void){ //For manual control
 		stopMotor(rightMotor);
 	}
 
-	//if (vexRT(Btn8U)){ roboControl();} //If 8L is pressed, we go into auto test mode
+	if (vexRT(Btn8D)){ roboControl();} //If 8L is pressed, we go into auto test mode
 
 	// Starts and stops the horizontal belt
 	if (vexRT(Btn8L)){hozBeltBtn_beenPressed = true;} //We have pressed it
