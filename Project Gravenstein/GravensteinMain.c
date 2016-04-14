@@ -39,79 +39,62 @@ void updateLauncherSpeed(void){ //Updates the launcher speed changes
 void goForwardFor_time(int time){ //Goes forward for a set ammount of time
 	setMotor(leftMotor,autoSpeed);
 	setMotor(rightMotor,autoSpeed);
-	wait(time);
+	clearTimer(T1);
+	while(time1[T1] < time* 1000){updateLauncherSpeed();}
 	stopMotor(leftMotor);
 	stopMotor(rightMotor);
 }
 void goBackwardFor_time(int time){ //Goes Backwards for a set ammount of time
 	setMotor(leftMotor,-autoSpeed);
 	setMotor(rightMotor,-autoSpeed);
-	wait(time);
+	clearTimer(T1);
+	while(time1[T1] < time* 1000){updateLauncherSpeed();}
 	stopMotor(leftMotor);
 	stopMotor(rightMotor);
 }
 void goForwardFor_distance(int targetInches){//Go Forwards a distance
 	//600  = 13.5in (44.444)perIn
 	//600 -right, +left
-	int targetDistance_left = targetInches * (44.4);
-	int targetDistance_right = -targetDistance_left;
+	int targetDistance = targetInches * (44.4);
 	SensorValue(encoder_Left) = 0;
-	SensorValue(encoder_Right) = 0;
-	while(encoder_Left < targetDistance_left || encoder_Right < targetDistance_right){
+	while(encoder_Left < targetDistance){
 		//Change left motor
-		if (encoder_Left < targetDistance_left+30 || encoder_Left < targetDistance_left-30) {setMotor(leftMotor,autoSpeed);}
-		else if (encoder_Left > targetDistance_left+30 || encoder_Left > targetDistance_left-30) {setMotor(leftMotor,-autoSpeed);}
-		else {stopMotor(leftMotor);}
-		//Change Right motor
-
-
-
-		//RIGHT KEEPS GOING?@
-		if (encoder_Right < targetDistance_right+30 || encoder_Right < targetDistance_right-30) {setMotor(rightMotor,-autoSpeed);}
-		else if (encoder_Right > targetDistance_right+30 || encoder_Right > targetDistance_right-30) {setMotor(rightMotor,autoSpeed);}
-		else {stopMotor(rightMotor);}
+		if (encoder_Left < targetDistance-30) {setMotor(leftMotor,autoSpeed);setMotor(rightMotor,autoSpeed);}
+		else if (encoder_Left > targetDistance+30) {setMotor(leftMotor,-autoSpeed);setMotor(rightMotor,-autoSpeed);}
+		else {stopMotor(leftMotor);stopMotor(rightMotor);}
+		updateLauncherSpeed();//Check for changes
 	}
+	stopMotor(leftMotor);
+	stopMotor(rightMotor);
 }
 void goBackwardFor_distance(int targetInches){//Go backwards a distance
 	//600  = 13.5in (44.444)perIn
 	//600 -right, +left
-	int targetDistance_left = targetInches * (44.4);
-	int targetDistance_right = -targetDistance_left;
+	int targetDistance = targetInches * (44.4) * -1;
 	SensorValue(encoder_Left) = 0;
-	SensorValue(encoder_Right) = 0;
-	while(encoder_Left > targetDistance_left || encoder_Right > targetDistance_right){
+	while(encoder_Left > targetDistance){
 		//Change left motor
-		if (encoder_Left < targetDistance_left) {setMotor(leftMotor,autoSpeed);}
-		else if (encoder_Left > targetDistance_left) {setMotor(leftMotor,-autoSpeed);}
-		else {stopMotor(leftMotor);}
-		//Change Right motor
-		if (encoder_Right < targetDistance_right) {setMotor(rightMotor,-autoSpeed);}
-		else if (encoder_Right > targetDistance_right) {setMotor(rightMotor,autoSpeed);}
-		else {stopMotor(rightMotor);}
+		if (encoder_Left > targetDistance+30) {setMotor(leftMotor,-autoSpeed);setMotor(rightMotor,-autoSpeed);}
+		else if (encoder_Left < targetDistance-30) {setMotor(leftMotor,autoSpeed);setMotor(rightMotor,autoSpeed);}
+		else {stopMotor(leftMotor);stopMotor(rightMotor);}
+		updateLauncherSpeed();//Check for changes
 	}
-}
-void turn_right(void){
-	//while
-	//1272
-}
-void turn_left(void){
-
+	stopMotor(leftMotor);
+	stopMotor(rightMotor);
 }
 void safeLauncherStop(void){
 	launcherSpeed_new = 0; //Set our new target speed
 	if(launcherSpeed > 22){launcherSpeed = launcherSpeed - 22;} //Do our first drop down, so it dosn't take so long
 	else {launcherSpeed = 0;}
 }
+
+/*			Main Loops			*/
 void roboControl(void){ //For autonomous control	//This is test code
-	//We spin in a circle for 5 seconds
-	setMotor(leftMotor,100);
-	setMotor(rightMotor,-100);
-	wait(5);
-	stopMotor(leftMotor);
-	stopMotor(rightMotor);
-	goForwardFor_distance(4);//Go forward 4 in
-	goForwardFor_time(2);//Go forward 2 seconds
-	wait(100000000);
+	launcherSpeed_new = 120;//Lets start this
+	goForwardFor_time(11);//Go forward 11 seconds
+	clearTimer(T1);
+	while(time1[T1] < 4000){setMotor(vertBelt,100);}
+	//goBackwardFor_time(2);
 }
 
 void manualControl(void){ //For manual control
@@ -151,8 +134,8 @@ void manualControl(void){ //For manual control
 }
 
 task main(){
-	//enableCompetitionMode(); //This makes it so the Vex Competition machine can take control
-	bool _CompetitionMode = false; //Allowing us to refrence if we are in Competition Mode
+	enableCompetitionMode(); //This makes it so the Vex Competition machine can take control
+	bool _CompetitionMode = true; //Allowing us to refrence if we are in Competition Mode
 
 	repeat(forever){
 		if ( _CompetitionMode == true){
