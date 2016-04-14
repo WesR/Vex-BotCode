@@ -37,8 +37,8 @@ void updateLauncherSpeed(void){ //Updates the launcher speed changes
 }
 
 void goForwardFor_time(int time){ //Goes forward for a set ammount of time
-	setMotor(leftMotor,autoSpeed);
-	setMotor(rightMotor,(autoSpeed-5));
+	setMotor(leftMotor,(autoSpeed-5));
+	setMotor(rightMotor,autoSpeed);
 	clearTimer(T1);
 	while(time1[T1] < time* 1000){updateLauncherSpeed();}
 	stopMotor(leftMotor);
@@ -102,8 +102,8 @@ void manualControl(void){ //For manual control
 
 	if (abs(vexRT(Ch2)) > 15 || abs(vexRT(Ch3)) > 15){ //Only move if we pop over 15 units on the controls
 		//Run the motors at the joystick input
-		setMotor(leftMotor,(-vexRT(Ch3)));
-		setMotor(rightMotor,(-vexRT(Ch2)));
+		setMotor(leftMotor,vexRT(Ch3));
+		setMotor(rightMotor,vexRT(Ch2));
 		}	else {
 		//Kill the motors
 		stopMotor(leftMotor);
@@ -136,14 +136,6 @@ void manualControl(void){ //For manual control
 
 task main(){
 	enableCompetitionMode(); //This makes it so the Vex Competition machine can take control
-	bool _CompetitionMode = true; //Allowing us to refrence if we are in Competition Mode
-
-	repeat(forever){
-		if ( _CompetitionMode == true){
-			if (getCompetitionDriverControl() == true) {manualControl();} //Competition driver Controls
-			if (getCompetitionAutonomous() == true) {roboControl();} //Competition robo Controls
-			} else {
-			manualControl(); //For driver controls
-		}
-	}
+	if (getCompetitionDriverControl() == true) {manualControl();} //Competition driver Controls
+	if (getCompetitionAutonomous() == true) {roboControl();} //Competition robo Controls
 }
