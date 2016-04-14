@@ -37,10 +37,10 @@ void updateLauncherSpeed(void){ //Updates the launcher speed changes
 }
 
 void goForwardFor_time(int time){ //Goes forward for a set ammount of time
-	setMotor(leftMotor,(autoSpeed-8));
-	setMotor(rightMotor,autoSpeed);
+	setMotor(leftMotor,autoSpeed);//Use -8 to go forward
+	setMotor(rightMotor,(autoSpeed-5));
 	clearTimer(T1);
-	while(time1[T1] < time* 1000){updateLauncherSpeed();}
+	while(time1[T1] < time* 1000){updateLauncherSpeed();setMotor(hozBelt,100);}
 	stopMotor(leftMotor);
 	stopMotor(rightMotor);
 }
@@ -91,10 +91,11 @@ void safeLauncherStop(void){
 /*	----------------------------		Main Loops	-------------------------------		*/
 
 void roboControl(void){ //For autonomous control	//This is test code
+	setLauncherSpeed(30);
 	launcherSpeed_new = 120;//Lets start this
-	goForwardFor_time(9);//Go forward 11 seconds
+	goForwardFor_time(5.3);//Go forward 11 seconds
 	clearTimer(T1);
-	while(time1[T1] < 4000){setMotor(vertBelt,100);}
+	while(time1[T1] < 20000){setMotor(vertBelt,100);setMotor(hozBelt,100);}
 }
 
 void manualControl(void){ //For manual control
@@ -109,7 +110,7 @@ void manualControl(void){ //For manual control
 		stopMotor(rightMotor);
 	}
 
-	//if (vexRT(Btn8D)){ roboControl();} //If 8L is pressed, we go into auto test mode
+	if (vexRT(Btn8U)){ roboControl();} //If 8D is pressed, we go into auto test mode
 
 	// Starts and stops the horizontal belt
 	if (vexRT(Btn8L)){hozBeltBtn_beenPressed = true;} //We have pressed it
