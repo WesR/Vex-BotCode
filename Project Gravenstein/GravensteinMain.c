@@ -37,7 +37,7 @@ void updateLauncherSpeed(void){ //Updates the launcher speed changes
 }
 
 void goForwardFor_time(int time){ //Goes forward for a set ammount of time
-	setMotor(leftMotor,(autoSpeed-5));
+	setMotor(leftMotor,(autoSpeed-6));
 	setMotor(rightMotor,autoSpeed);
 	clearTimer(T1);
 	while(time1[T1] < time* 1000){updateLauncherSpeed();}
@@ -95,7 +95,6 @@ void roboControl(void){ //For autonomous control	//This is test code
 	goForwardFor_time(11);//Go forward 11 seconds
 	clearTimer(T1);
 	while(time1[T1] < 4000){setMotor(vertBelt,100);}
-	//goBackwardFor_time(2);
 }
 
 void manualControl(void){ //For manual control
@@ -136,6 +135,8 @@ void manualControl(void){ //For manual control
 
 task main(){
 	enableCompetitionMode(); //This makes it so the Vex Competition machine can take control
-	if (getCompetitionDriverControl() == true) {manualControl();} //Competition driver Controls
-	if (getCompetitionAutonomous() == true) {roboControl();} //Competition robo Controls
+	repeat(forever){
+		if (getCompetitionAutonomous() == true) {roboControl();} //Competition robo Controls
+		if (getCompetitionDriverControl() == true) {manualControl();} //Competition driver Controls
+	}
 }
