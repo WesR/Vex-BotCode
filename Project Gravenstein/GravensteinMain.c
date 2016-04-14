@@ -44,6 +44,14 @@ void goForwardFor_time(int time){ //Goes forward for a set ammount of time
 	stopMotor(leftMotor);
 	stopMotor(rightMotor);
 }
+void goForwardFor_time_escape(int time){ //Goes forward for a set ammount of time
+	setMotor(leftMotor,autoSpeed);//Use -8 to go forward
+	setMotor(rightMotor,(autoSpeed-5));
+	clearTimer(T1);
+	while(time1[T1] < time* 1000 && !vexRT(Btn8U)){updateLauncherSpeed();setMotor(hozBelt,100);}
+	stopMotor(leftMotor);
+	stopMotor(rightMotor);
+}
 void goBackwardFor_time(int time){ //Goes Backwards for a set ammount of time
 	setMotor(leftMotor,-autoSpeed);
 	setMotor(rightMotor,-autoSpeed);
@@ -88,7 +96,7 @@ void safeLauncherStop(void){
 	else {launcherSpeed = 0;}
 }
 
-/*	----------------------------		Main Loops	-------------------------------		*/
+/*	 ----------------------------		Main Loops  -------------------------------		*/
 
 void roboControl(void){ //For autonomous control	//This is test code
 	setLauncherSpeed(30);
@@ -110,7 +118,14 @@ void manualControl(void){ //For manual control
 		stopMotor(rightMotor);
 	}
 
-	if (vexRT(Btn8U)){ roboControl();} //If 8D is pressed, we go into auto test mode
+	if (vexRT(Btn8U)){//If 8D is pressed, launch the macro
+		setLauncherSpeed(30);
+		launcherSpeed_new = 120;//Lets start this
+		goForwardFor_time_escape(5.3);//Go forward 11 seconds
+		clearTimer(T1);
+		while(time1[T1] < 20000){setMotor(vertBelt,100);setMotor(hozBelt,100);}
+	}
+
 
 	// Starts and stops the horizontal belt
 	if (vexRT(Btn8L)){hozBeltBtn_beenPressed = true;} //We have pressed it
