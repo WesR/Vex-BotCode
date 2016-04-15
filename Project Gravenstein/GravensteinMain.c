@@ -33,9 +33,14 @@ void safeLauncherStop(void){
 	if(launcherSpeed > 22){launcherSpeed = launcherSpeed - 22;} //Do our first drop down, so it dosn't take so long
 	else {launcherSpeed = 0;}
 }
-void updateLauncherSpeed(int incriment){ //Updates the launcher speed changes
-	if (launcherSpeed < launcherSpeed_new){launcherSpeed+=incriment;wait(.1);}
-	if (launcherSpeed > launcherSpeed_new){launcherSpeed-=incriment;wait(.1);}
+void updateLauncherSpeed(void){ //Updates the launcher speed changes
+	if (launcherSpeed < launcherSpeed_new){launcherSpeed++;wait(.1);}
+	if (launcherSpeed > launcherSpeed_new){launcherSpeed--;wait(.1);}
+	setLauncherSpeed(launcherSpeed);
+}
+void updateLauncherSpeed(int inc){ //Updates the launcher speed changes
+	if (launcherSpeed < launcherSpeed_new){launcherSpeed+inc;wait(.1);}
+	if (launcherSpeed > launcherSpeed_new){launcherSpeed--;wait(.1);}
 	setLauncherSpeed(launcherSpeed);
 }
 
@@ -43,7 +48,7 @@ void goForwardFor_time(int time){ //Goes forward for a set ammount of time
 	setMotor(leftMotor,autoSpeed);//Use -8 to go forward
 	setMotor(rightMotor,(autoSpeed-5));
 	clearTimer(T1);
-	while(time1[T1] < time* 1000){updateLauncherSpeed(1);setMotor(hozBelt,100);}
+	while(time1[T1] < time* 1000){updateLauncherSpeed();setMotor(hozBelt,100);}
 	stopMotor(leftMotor);
 	stopMotor(rightMotor);
 }
@@ -51,7 +56,7 @@ void goForwardFor_time(int time, int launcherSpeedInc){ //Goes forward for a set
 	setMotor(leftMotor,autoSpeed);//Use -8 to go forward
 	setMotor(rightMotor,(autoSpeed-20));
 	clearTimer(T1);
-	while(time1[T1] < time* 1000){updateLauncherSpeed(launcherSpeedInc);setMotor(hozBelt,100);}
+	while(time1[T1] < time* 1000){updateLauncherSpeed();setMotor(hozBelt,100);}
 	stopMotor(leftMotor);
 	wait(.8);
 	stopMotor(rightMotor);
@@ -60,7 +65,7 @@ void goBackwardFor_time(int time){ //Goes Backwards for a set ammount of time
 	setMotor(leftMotor,-autoSpeed);
 	setMotor(rightMotor,-autoSpeed);
 	clearTimer(T1);
-	while(time1[T1] < time* 1000){updateLauncherSpeed(1);}
+	while(time1[T1] < time* 1000){updateLauncherSpeed();}
 	stopMotor(leftMotor);
 	stopMotor(rightMotor);
 }
@@ -72,7 +77,7 @@ void roboControl(void){ //For autonomous control	//This is test code
 	launcherSpeed_new = 120;//Lets start this
 	goForwardFor_time(5,3);//Go forward 6.1 seconds
 	clearTimer(T1);
-	while(time1[T1] < 20000){setMotor(vertBelt,100);setMotor(hozBelt,100);}
+	while(time1[T1] < 20000){setMotor(vertBelt,80);setMotor(hozBelt,100);}
 }
 
 void manualControl(void){ //For manual control
@@ -107,7 +112,7 @@ void manualControl(void){ //For manual control
 	if (vexRT(Btn7L)){ launcherSpeed_new = 65;} //Sets launcher speed to 65
 	if (vexRT(Btn7U)){ launcherSpeed_new = 100;} //Sets launcher speed to 100
 	if (vexRT(Btn7R)){ launcherSpeed_new = 127;} //Sets launcher speed to 127 (max)
-	updateLauncherSpeed(1);
+	updateLauncherSpeed();
 }
 
 task main(){
