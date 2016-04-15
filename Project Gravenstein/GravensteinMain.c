@@ -43,7 +43,12 @@ void updateLauncherSpeed(int inc){ //Updates the launcher speed changes
 	if (launcherSpeed > launcherSpeed_new){launcherSpeed--;wait(.1);}
 	setLauncherSpeed(launcherSpeed);
 }
-
+void launcherSpeedHop(void){
+	int speedHop = 15
+	if (launcherSpeed < speedHop){
+		setLauncherSpeed(launcherSpeed+speedHop);
+	}
+}
 void goForwardFor_time(int time){ //Goes forward for a set ammount of time
 	setMotor(leftMotor,autoSpeed);//Use -8 to go forward
 	setMotor(rightMotor,(autoSpeed-5));
@@ -73,7 +78,7 @@ void goBackwardFor_time(int time){ //Goes Backwards for a set ammount of time
 /*	 ----------------------------		Main Loops  -------------------------------		*/
 
 void roboControl(void){ //For autonomous control	//This is test code
-	setLauncherSpeed(40);
+	setLauncherSpeed(30);
 	launcherSpeed_new = 120;//Lets start this
 	goForwardFor_time(5,3);//Go forward 6.1 seconds
 	clearTimer(T1);
@@ -92,13 +97,26 @@ void manualControl(void){ //For manual control
 		stopMotor(rightMotor);
 	}
 
+	//Pop up 15
+	if (vexRT(Btn7R)){launcherSpeedHop();}
+
+	//VertBelt On
+	if (vexRT(Btn8L)){setMotor(vertBelt,100);}
+
+	//Start Hoz belt
+	if (vexRT(Btn8L)){setMotor(hozBelt,100);}
+
+	//Kill the belts
+	if (vexRT(Btn8D)){stopMotor(hozBelt);stopMotor(vertBelt);}
+
 	// Starts and stops the horizontal belt
+	/*
 	if (vexRT(Btn8L)){hozBeltBtn_beenPressed = true;} //We have pressed it
 	if (!vexRT(Btn8L) && hozBeltBtn_beenPressed){ //When we let go lets flip
-		if (!hozBelt_on){hozBelt_on = true; setMotor(hozBelt,100);}else{hozBelt_on = false;stopMotor(hozBelt);}
-		hozBeltBtn_beenPressed = false;
+	if (!hozBelt_on){hozBelt_on = true; setMotor(hozBelt,100);}else{hozBelt_on = false;stopMotor(hozBelt);}
+	hozBeltBtn_beenPressed = false;
 	}
-
+	*/
 	// Starts and stops verticle belt
 	if (vexRT(Btn5D)||vexRT(Btn6D)){
 		if (vexRT(Btn5D)){setMotor(vertBelt,-100);} else {setMotor(vertBelt,100);}
@@ -106,12 +124,17 @@ void manualControl(void){ //For manual control
 		stopMotor(vertBelt);
 	}
 
+	//Quick start, all on
+	if (vexRT(Btn7L)){
+		setMotor(hozBelt,100);
+		setMotor(vertBelt,100);
+		launcherSpeed_new = 127;
+	}
+
 	/*			Launcher speeds			*/
 	if (vexRT(Btn8R)){ stopLauncher();} //Emergency launcher Stop
-	if (vexRT(Btn7D)){ safeLauncherStop();} //Safe launcher Stop
-	if (vexRT(Btn7L)){ launcherSpeed_new = 65;} //Sets launcher speed to 65
-	if (vexRT(Btn7U)){ launcherSpeed_new = 100;} //Sets launcher speed to 100
-	if (vexRT(Btn7R)){ launcherSpeed_new = 127;} //Sets launcher speed to 127 (max)
+	//if (vexRT(Btn7D)){ safeLauncherStop();} //Safe launcher Stop
+	if (vexRT(Btn7U)){ launcherSpeed_new = 127;} //Sets launcher speed to 127 (max)
 	updateLauncherSpeed();
 }
 
