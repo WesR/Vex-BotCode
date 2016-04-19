@@ -68,45 +68,49 @@ void launcherSpeedHop(void){
 		setLauncherSpeed(launcherSpeed+speedHop);
 	}
 }
-/*
+
 void goForwardFor_time(int time){ //Goes forward for a set ammount of time
-setMotor(leftMotor,autoSpeed);//Use -8 to go forward
-setMotor(rightMotor,(autoSpeed-5));
-clearTimer(T1);
-while(time1[T1] < time* 1000){updateLauncherSpeed();setMotor(hozBelt,100);}
-stopMotor(leftMotor);
-stopMotor(rightMotor);
-}
-*/
-void goForwardFor_time(int time, int launcherSpeedInc){ //Goes forward for a set ammount of time
-	setMotor(leftMotor,autoSpeed);
-	setMotor(leftMotor2,autoSpeed);
+	setMotor(leftMotor,autoSpeed-8);
+	setMotor(leftMotor2,autoSpeed-8);
 	setMotor(rightMotor,autoSpeed);
 	setMotor(rightMotor2,autoSpeed);//Use -8 to go forward
-	setLeftMotors (autoSpeed-8);
 	clearTimer(T1);
 	while(time1[T1] < time* 1000){updateLauncherSpeed();setMotor(hozBelt,100);}
 	stopRightMotors();
 	stopLeftMotors();
 }
 void goBackwardFor_time(int time){ //Goes Backwards for a set ammount of time
-	setLeftMotors(-autoSpeed);
-	setRightMotors(-autoSpeed);
+	setMotor(leftMotor,-autoSpeed-8);
+	setMotor(leftMotor2,-autoSpeed-8);
+	setMotor(rightMotor,-autoSpeed);
+	setMotor(rightMotor2,-autoSpeed);//Use -8 to go forward
 	clearTimer(T1);
 	while(time1[T1] < time* 1000){updateLauncherSpeed();}
 	stopLeftMotors();
 	stopRightMotors();
 }
 
+void turnRight(int time){
+	setMotor(leftMotor,autoSpeed);
+	setMotor(leftMotor2,autoSpeed);
+	clearTimer(T1);
+	while(time1[T1] < time * 1000){updateLauncherSpeed();}
+	stopLeftMotors();
+	stopRightMotors();
+}
 /*	 ----------------------------		Main Loops  -------------------------------		*/
 
 void roboControl(void){ //For autonomous control
 	setLauncherSpeed(30);
 	launcherSpeed_new = 90;//Lets start this shoot speed
-	goForwardFor_time(6,3);//Go forward 10 seconds
+	goForwardFor_time(11);//Go forward 10 seconds
 	clearTimer(T1);
-	while(time1[T1] < 60000){setMotor(vertBelt,80);setMotor(hozBelt,100);updateLauncherSpeed(2);}
-
+	while(time1[T1] < 15000){setMotor(vertBelt,80);setMotor(hozBelt,100);updateLauncherSpeed(2);}
+	goBackwardFor_time(1);
+	turnRight(1.5);
+	goForwardFor_time(.5);
+	turnRight(.7);
+	goForwardFor_time(5);
 }
 
 void manualControl(void){ //For manual control
