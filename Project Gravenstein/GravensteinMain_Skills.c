@@ -17,8 +17,6 @@
 int launcherSpeed = 0;
 int launcherSpeed_new = 0;
 int autoSpeed = 127;
-//bool hozBelt_on = false;
-//bool hozBeltBtn_beenPressed = false;
 
 void setLeftMotors(int _speed){
 	setMotor(leftMotor,_speed);
@@ -85,16 +83,12 @@ void goForwardFor_time(int time, int launcherSpeedInc){ //Goes forward for a set
 	setMotor(leftMotor2,autoSpeed);
 	setMotor(rightMotor,autoSpeed);
 	setMotor(rightMotor2,autoSpeed);//Use -8 to go forward
-	setLeftMotors (autoSpeed-15);
+	setLeftMotors (autoSpeed-8);
 	clearTimer(T1);
 	while(time1[T1] < time* 1000){updateLauncherSpeed();setMotor(hozBelt,100);}
-
-
 	stopRightMotors();
-	wait(.3);//turning right
-stopLeftMotors();
-
-	}
+	stopLeftMotors();
+}
 void goBackwardFor_time(int time){ //Goes Backwards for a set ammount of time
 	setLeftMotors(-autoSpeed);
 	setRightMotors(-autoSpeed);
@@ -106,26 +100,12 @@ void goBackwardFor_time(int time){ //Goes Backwards for a set ammount of time
 
 /*	 ----------------------------		Main Loops  -------------------------------		*/
 
-void roboControl(void){ //For autonomous control	//This is test code
+void roboControl(void){ //For autonomous control
 	setLauncherSpeed(30);
 	launcherSpeed_new = 90;//Lets start this shoot speed
-	goForwardFor_time(10,3);//Go forward 6.3 seconds
-	setMotor(hozBelt,100);
-	setMotor(vertBelt,70);
-
-	setLeftMotors(127);
-	setRightMotors(127);
-	wait(3);
-	stopLeftMotors();
-	stopRightMotors();
-
+	goForwardFor_time(6,3);//Go forward 10 seconds
 	clearTimer(T1);
-
-	while(time1[T1] < 60000){setMotor(vertBelt,80);setMotor(hozBelt,100);
-		updateLauncherSpeed(2);
-
-
-	}
+	while(time1[T1] < 60000){setMotor(vertBelt,80);setMotor(hozBelt,100);updateLauncherSpeed(2);}
 
 }
 
@@ -173,7 +153,7 @@ void manualControl(void){ //For manual control
 	/*			Launcher speeds			*/
 	if (vexRT(Btn7D)){ stopLauncher();} //Emergency launcher Stop
 	//if (vexRT(Btn7D)){ safeLauncherStop();} //Safe launcher Stop
-	if (vexRT(Btn7R)){launcherSpeedHop();}//Pop up 15
+	if (vexRT(Btn7R)){launcherSpeed_new = 75;}//Low speed mode
 	if (vexRT(Btn7U)){ launcherSpeed_new = 127;} //Sets launcher speed to 127 (max)
 	updateLauncherSpeed();
 }
