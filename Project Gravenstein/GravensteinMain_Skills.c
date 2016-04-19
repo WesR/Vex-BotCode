@@ -70,20 +70,27 @@ void launcherSpeedHop(void){
 }
 
 void goForwardFor_time(int time){ //Goes forward for a set ammount of time
-	setMotor(leftMotor,autoSpeed-8);
-	setMotor(leftMotor2,autoSpeed-8);
-	setMotor(rightMotor,autoSpeed);
-	setMotor(rightMotor2,autoSpeed);//Use -8 to go forward
+	int driftCorrection = 40;
+	//setMotor(leftMotor,127);
+	setMotor(leftMotor2,127);
+	//setMotor(rightMotor,100);
+	setMotor(rightMotor2,127);
+	//setMotor(rightMotor,autoSpeed - driftCorrection);
+	//setMotor(rightMotor2,autoSpeed - driftCorrection);//Use -8 to go forward
 	clearTimer(T1);
 	while(time1[T1] < time* 1000){updateLauncherSpeed();setMotor(hozBelt,100);}
 	stopRightMotors();
 	stopLeftMotors();
 }
 void goBackwardFor_time(int time){ //Goes Backwards for a set ammount of time
-	setMotor(leftMotor,-autoSpeed-8);
-	setMotor(leftMotor2,-autoSpeed-8);
-	setMotor(rightMotor,-autoSpeed);
-	setMotor(rightMotor2,-autoSpeed);//Use -8 to go forward
+	//setMotor(leftMotor,-autoSpeed-8);
+	//setMotor(leftMotor2,-autoSpeed-8);
+	//setMotor(rightMotor,-autoSpeed);
+	//setMotor(rightMotor2,-autoSpeed);//Use -8 to go forward
+	setMotor(leftMotor,-50);
+	setMotor(leftMotor2,-50);
+	setMotor(rightMotor,-50);
+	setMotor(rightMotor2,-50);//Use -8 to go forward
 	clearTimer(T1);
 	while(time1[T1] < time* 1000){updateLauncherSpeed();}
 	stopLeftMotors();
@@ -102,14 +109,16 @@ void turnRight(int time){
 
 void roboControl(void){ //For autonomous control
 	setLauncherSpeed(30);
-	launcherSpeed_new = 90;//Lets start this shoot speed
-	goForwardFor_time(11);//Go forward 10 seconds
+	launcherSpeed_new = 127;//Lets start this shoot speed
+	goForwardFor_time(7);//Go forward 10 seconds
+	goBackwardFor_time(1);
 	clearTimer(T1);
 	while(time1[T1] < 15000){setMotor(vertBelt,80);setMotor(hozBelt,100);updateLauncherSpeed(2);}
 	goBackwardFor_time(1);
-	turnRight(1.5);
+	turnRight(0.1);
+	setMotor(hozBelt,-100);
 	goForwardFor_time(.5);
-	turnRight(.7);
+	turnRight(0.1);
 	goForwardFor_time(5);
 }
 
@@ -138,14 +147,8 @@ void manualControl(void){ //For manual control
 	//Kill the belts
 	if (vexRT(Btn8D)){stopMotor(hozBelt);stopMotor(vertBelt);}
 
-	// Starts and stops the horizontal belt
-	/*
-	if (vexRT(Btn8L)){hozBeltBtn_beenPressed = true;} //We have pressed it
-	if (!vexRT(Btn8L) && hozBeltBtn_beenPressed){ //When we let go lets flip
-	if (!hozBelt_on){hozBelt_on = true; setMotor(hozBelt,100);}else{hozBelt_on = false;stopMotor(hozBelt);}
-	hozBeltBtn_beenPressed = false;
-	}
-	*/
+	//Start Auto
+	if (vexRT(Btn8L) && vexRT(Btn8R)){roboControl();}
 
 	//Quick start, all on
 	if (vexRT(Btn7L)){
