@@ -101,7 +101,8 @@ void turnRight(int time){
 	setMotor(leftMotor,autoSpeed);
 	setMotor(leftMotor2,autoSpeed);
 	clearTimer(T1);
-	while(time1[T1] < time * 1000){updateLauncherSpeed();}
+	wait(time);
+	//while(time1[T1] < time * 1000){updateLauncherSpeed();}
 	stopLeftMotors();
 	stopRightMotors();
 }
@@ -110,17 +111,22 @@ void turnRight(int time){
 void roboControl(void){ //For autonomous control
 	setLauncherSpeed(30);
 	launcherSpeed_new = 127;//Lets start this shoot speed
-	goForwardFor_time(7);//Go forward 10 seconds
+	goForwardFor_time(10);//Go forward 10 seconds
 	goBackwardFor_time(1);
 	clearTimer(T1);
-	while(time1[T1] < 15000){setMotor(vertBelt,80);setMotor(hozBelt,100);updateLauncherSpeed(2);}
-	goBackwardFor_time(1);
+	while(time1[T1] < 20000){setMotor(vertBelt,80);setMotor(hozBelt,100);updateLauncherSpeed(2);}
+
+
+
+	/*goBackwardFor_time(1);
 	turnRight(0.1);
 	setMotor(hozBelt,-100);
 	goForwardFor_time(.5);
 	turnRight(0.1);
-	goForwardFor_time(5);
+	goForwardFor_time(5);*/
 }
+
+
 
 void manualControl(void){ //For manual control
 
@@ -133,6 +139,13 @@ void manualControl(void){ //For manual control
 		stopLeftMotors();
 		stopRightMotors();
 	}
+
+
+
+	if (vexRT(Btn8U)){
+		setMotor(vertBelt,- 0);
+	}
+
 
 	// Starts and stops verticle belt
 	if (vexRT(Btn5D)||vexRT(Btn6D)){
