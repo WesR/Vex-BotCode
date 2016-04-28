@@ -103,6 +103,10 @@ void turnRight(int time){
 	clearTimer(T1);
 	wait(time);
 	//while(time1[T1] < time * 1000){updateLauncherSpeed();}
+	//By calling to update the wheel speed, we lose accuracy.
+	//This is why I have changed it to a wait. Though we do not manage the speed control, 
+	//we only lose it for a few seconds.
+	wait(time);
 	stopLeftMotors();
 	stopRightMotors();
 }
@@ -124,6 +128,16 @@ void roboControl(void){ //For autonomous control
 	goForwardFor_time(.5);
 	turnRight(0.1);
 	goForwardFor_time(5);*/
+	goForwardFor_time(7);//Go forward 7 seconds
+	goBackwardFor_time(1); //Get to launching distance
+	clearTimer(T1);
+	while(time1[T1] < 15000){setMotor(vertBelt,80);setMotor(hozBelt,100);updateLauncherSpeed(2);}
+	goBackwardFor_time(1);
+	turnRight(1);
+	setMotor(hozBelt,-100);
+	goForwardFor_time(.5);
+	turnRight(0.25);
+	goForwardFor_time(5);
 }
 
 
